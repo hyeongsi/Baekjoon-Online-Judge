@@ -1,17 +1,10 @@
-from collections import Counter
-diceNum = list(map(int, input().split()))
+a, b, c = map(int, input().split())
 
-count = Counter(diceNum)
-result = 0
-
-if len(count.keys()) == 1:
-    result = 10000 + diceNum[0] * 1000
-elif len(count.keys()) == 2:
-    if count[max(count.keys())] == 1:
-        result = 1000 + min(count.keys()) * 100
-    else:
-        result = 1000 + max(count.keys()) * 100
+if a == b == c:
+    print(10000 + a * 1000)
+elif a == b or a == c :
+    print(1000 + a * 100)
+elif b == c:
+    print(1000 + b * 100)
 else:
-    result = max(diceNum) * 100  
-
-print(result)
+    print(100 * max(a,b,c))
