@@ -10,20 +10,18 @@ public class Main {
 		
 		int loop = Integer.parseInt(br.readLine());
 		st = new StringTokenizer(br.readLine());
+		String find = br.readLine();
 		
+		int result = 0;
 		String[] arr = new String[loop];
+		
 		for(int i=0; i<loop; i++) {
 			arr[i] = st.nextToken();
-		}
-		
-		String find = br.readLine();
-		int result = 0;
-		for(int i=0; i<loop; i++) {
-			if(arr[i].equals(find)) {
+			if(arr[i].equals(find))
 				result++;
-			}
 		}
 		
 		System.out.println(result);
+		br.close();
 	}
 }
