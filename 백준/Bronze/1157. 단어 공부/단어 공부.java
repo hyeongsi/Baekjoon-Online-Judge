@@ -6,27 +6,32 @@ public class Main {
 	public static void main(String[] args) throws IOException {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		
-		char[] ch = br.readLine().toUpperCase().toCharArray();
-		int[] arr = new int['Z'-'A'+1];
+		int str = br.read();
+		int[] arr = new int[26];
 		
-		for(int i = 0; i < ch.length; i++) {
-			arr[(int)(ch[i] - 'A')] +=1;
+		while(str > ' ') {	// \r(13), \n(10), ' '(32) 
+			if(str >= 'A' && str <= 'Z')
+				arr[str - 'A']++;
+			else
+				arr[str - 'a']++;
+			
+			str = br.read();
 		}
 		
+		int[] max = {0,0}; // maxValue, index
 		boolean dup = false;
-		int index = 0;
-		for(int i = 1; i < arr.length; i++) {
-			if(arr[index] < arr[i]) {
+		
+		for(int i = 0; i < arr.length; i++) {
+			if(max[0] < arr[i]) {
 				dup = false;
-				index = i;
+				max[0] = arr[i];
+				max[1] = i;
 			}
-			else if(arr[index] == arr[i])
+			else if(max[0] == arr[i]) {
 				dup = true;
+			}
 		}
 		
-		if(dup)
-			System.out.println("?");
-		else
-			System.out.println((char)(index + 'A'));
+		System.out.println(dup==true? '?':(char)(max[1]+'A'));
 	}
 }
