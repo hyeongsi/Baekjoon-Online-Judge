@@ -19,21 +19,22 @@ public class Main {
 			card[i] = Integer.parseInt(st.nextToken());
 		}
 		
-		int min = Integer.MAX_VALUE;
-		long nearSum = 0;
+		int sum = 0;
+		int ans = 0;
 		
 		for(int i = 0; i < n-2; i++) {
 			for(int j = i+1; j < n-1; j++) {
 				for(int k = j+1; k < n; k++) {		
-					int sum = card[i] + card[j] + card[k];
-					if(Math.abs(m - sum) < min && sum <= m){
-						min = Math.abs(sum - m);
-						nearSum = sum;
+					
+					sum = card[i] + card[j] + card[k];
+					
+					if(ans < sum && sum <= m){
+						ans = sum;
 					}
 				}
 			}
 		}
 		
-		System.out.println(nearSum);
+		System.out.println(ans);
 	}
 }
