@@ -8,12 +8,7 @@ public class Main {
 		
 		long n = Long.parseLong(br.readLine());
 		
-		long sum = 0;
-		for(long i = n-1; i >= 1; i--) {
-			sum += i;
-		}
-		
-		System.out.println(sum);
+		System.out.println(n * (n-1)/2);
 		System.out.println(2);
 	}
 }
