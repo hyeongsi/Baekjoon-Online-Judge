@@ -12,8 +12,7 @@ public class Main {
 		int x = Integer.parseInt(st.nextToken());
 		
 		int min = Integer.MAX_VALUE;
-		int wc;
-		int bc;
+		int c;
 		
 		String[] board = new String[y];
 		for(int i = 0; i < y; i++) {
@@ -22,11 +21,10 @@ public class Main {
 		
 		for(int i = 0; i <= y - 8; i ++) {
 			for(int j = 0; j <= x - 8; j ++) {
-				wc = getColoring(board.clone(), i, j, true);
-				bc = getColoring(board.clone(), i, j, false);
+				c = getColoring(board.clone(), i, j);
 				
-				if(min > Math.min(wc, bc)) {
-					min = Math.min(wc, bc);
+				if(min > c) {
+					min = c;
 				}
 			}
 		}
@@ -34,34 +32,22 @@ public class Main {
 		System.out.println(min);
 	}
 
-	private static int getColoring(String[] board, int y, int x, boolean isW) {
+	private static int getColoring(String[] board, int y, int x) {
 		
 		int coloring = 0;
+		char startColor = board[y].charAt(x);
 		
 		for(int i = 0; i < 8; i ++) {
 			for(int j = 0; j < 8; j ++) {
 				
-				if(isW) {	// w가 칠해질 순서에
-					if(board[y + i].charAt(x + j) != 'W' ) 	// w가 칠해져 있지 않다면
-						coloring++;		// 색칠 후 카운팅
-				}
-				else {		// b가 칠해질 순서에
-					if(board[y + i].charAt(x + j) != 'B' )  // b가 칠해져 있지 않다면
-						coloring++;		// 색칠 후 카운팅
-				}
-				
-				if(isW)
-					isW = false;
-				else
-					isW = true;			
+				if(board[y + i].charAt(x + j) != startColor ) 	
+					coloring++;		
+	
+				startColor = (startColor == 'W')? 'B' : 'W';
 			}
-			
-			if(isW)
-				isW = false;
-			else
-				isW = true;
+			startColor = (startColor == 'W')? 'B' : 'W';
 		}
 		
-		return coloring;
+		return Math.min(coloring, 64-coloring);
 	}
 }
