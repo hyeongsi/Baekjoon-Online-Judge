@@ -14,36 +14,14 @@ public class Main {
 		
 		if((a[0] + a[1] + a[2]) != 180) {
 			System.out.println("Error");
-			return;
-		}
-		
-		if((a[0] == a[1])) {
-			if(a[0] == a[2]) {
-				System.out.println("Equilateral");
-			}
-			else {
-				System.out.println("Isosceles");
-			}
-		}
-		else if((a[0] == a[2])) {
-			if(a[1] == a[2]) {
-				System.out.println("Equilateral");
-			}
-			else {
-				System.out.println("Isosceles");
-			}
-		}
-		else if((a[1] == a[2])) {
-			if(a[0] == a[1]) {
-				System.out.println("Equilateral");
-			}
-			else {
-				System.out.println("Isosceles");
-			}
 		}
 		else {
-			System.out.println("Scalene");
+			if(a[0] == a[1] && a[0] == a[2])
+				System.out.println("Equilateral");
+			else if(a[0] == a[1] || a[0] == a[2] || a[1] == a[2])
+				System.out.println("Isosceles");
+			else 
+				System.out.println("Scalene");
 		}	
-
 	}
 }
