@@ -13,8 +13,7 @@ public class Main {
 		for(int i = 0; i < loop; i++) {
 			Stack<Character> stack = new Stack<>();
 			String str = br.readLine();
-			String ans = "YES";
-			
+
 			for(int j = 0; j < str.length(); j++) {
 				char c = str.charAt(j);
 				
@@ -23,7 +22,7 @@ public class Main {
 				}
 				else {
 					if(stack.isEmpty()) {
-						ans = "NO";
+						stack.add(c);
 						break;
 					}
 					else 
@@ -32,9 +31,9 @@ public class Main {
 			}
 			
 			if(!stack.isEmpty())
-				ans = "NO";
-		
-			sb.append(ans + "\n");
+				sb.append("NO" + "\n");
+			else
+				sb.append("YES" + "\n");
 		}
 		
 		System.out.println(sb.toString());
