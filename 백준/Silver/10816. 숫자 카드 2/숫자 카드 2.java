@@ -16,22 +16,18 @@ public class Main {
 		
 		int n = Integer.parseInt(br.readLine());
 		StringTokenizer st = new StringTokenizer(br.readLine());
+		
 		for(int i = 0; i < n; i++) {
 			int key = Integer.parseInt(st.nextToken());
-			if(map.containsKey(key))
-				map.put(key, map.get(key)+1);
-			else 
-				map.put(key, 1);
+			map.put(key, map.getOrDefault(key, 0) + 1);
 		}
 		
 		int m = Integer.parseInt(br.readLine());
 		st = new StringTokenizer(br.readLine());
+		
 		for(int i = 0; i < m; i++) {
 			int key = Integer.parseInt(st.nextToken());
-			if(map.containsKey(key))
-				bw.write(map.get(key) + " ");
-			else
-				bw.write(0 + " ");
+			bw.write(map.getOrDefault(key, 0) + " ");
 		}
 		
 		bw.flush();
