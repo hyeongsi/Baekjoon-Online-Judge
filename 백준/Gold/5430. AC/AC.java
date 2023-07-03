@@ -1,6 +1,8 @@
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.ArrayDeque;
+import java.util.Deque;
 import java.util.StringTokenizer;
 
 public class Main {
@@ -13,63 +15,57 @@ public class Main {
 		for(int i = 0; i < t; i++) {
 			String p = br.readLine();
 			int n = Integer.parseInt(br.readLine());
-			String arr = br.readLine();
-			arr = arr.substring(1, arr.length()-1);
-			StringTokenizer st = new StringTokenizer(arr, ",");
+			StringTokenizer st = new StringTokenizer(br.readLine(), "[],");
 			
-			int[] iArr = new int[n];
+			Deque<String> dq = new ArrayDeque<>();
+			
 			for(int j = 0; j < n; j++) {
-				iArr[j] = Integer.parseInt(st.nextToken());
+				dq.add(st.nextToken());
 			}
 			
-			Boolean error = false;
-			Boolean reverse = false;
-			int front = 0;
-			int back = n-1;
-			
-			outer:
-			for(int j = 0; j < p.length(); j++) {		
-				switch(p.charAt(j)) {
-				case'R':
+			boolean reverse = false;
+			boolean error = false;
+			for(int j = 0; j < p.length(); j++) {
+				char c = p.charAt(j);
+				if(c == 'R') {
 					reverse = !reverse;
-					break;
-				case'D':
-					if(back == -1 || front > back) {
+				}
+				else {
+					if(dq.isEmpty()) {
 						error = true;
-						break outer;
+						break;
 					}
 					
 					if(reverse) {
-						iArr[back] = -1;
-						back--;
+						dq.pollLast();
 					}
 					else {
-						iArr[front] = -1;
-						front++;
-					}
-					break;
+						dq.pollFirst();
+					}		
 				}
 			}
-					
-			if(error) {
+			
+			if(error)
 				sb.append("error\n");
-			}
-			else {
+			else{
+				int size = dq.size();
+				
 				sb.append("[");
-				if(reverse) {
-					for(int j = back; j >= front ; j--)
-						sb.append(iArr[j] + ",");
+				while(!dq.isEmpty()) {
+					if(reverse) {
+						sb.append(dq.pollLast() + ",");
+					}
+					else {
+						sb.append(dq.pollFirst()+ ",");
+					}
 				}
-				else {
-					for(int j = front; j <= back ; j++)
-						sb.append(iArr[j] + ",");
-				}
-				if(!(back == -1 || front > back))
+				
+				if(size != 0)
 					sb.deleteCharAt(sb.length()-1);
 				sb.append("]\n");
 			}
-		}
-		
+			
+		}	
 		System.out.println(sb);
 	}	
 }
