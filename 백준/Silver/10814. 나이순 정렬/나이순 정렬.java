@@ -9,43 +9,28 @@ public class Main {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		int n = Integer.parseInt(br.readLine());
 		
-		int sequence = 0;
-		Info[] arr = new Info[n];
+		String[] name = new String[n];
+		int[][] arr = new int[n][2];
 		for(int i = 0; i < n; i++) {
 			StringTokenizer st = new StringTokenizer(br.readLine());
-			int age = Integer.parseInt(st.nextToken());
-			String name = st.nextToken();
-			
-			arr[i] = new Info(age, name, ++sequence);
+			arr[i][0] = Integer.parseInt(st.nextToken());
+			arr[i][1] = i;
+			name[i] = st.nextToken();
 		}
 		
 		Arrays.sort(arr, (o1, o2)->{
-			if(o1.age == o2.age) {
-				return o1.sequence - o2.sequence;
+			if(o1[0] == o2[0]) {
+				return o1[1]- o2[1];
 			}
 			
-			return o1.age - o2.age;
+			return o1[0] - o2[0];
 		});
 		
-		for(Info a: arr) {
-			System.out.println(a);
+		StringBuilder sb = new StringBuilder();
+		for(int[] i: arr) {
+			sb.append(i[0]).append(' ').append(name[i[1]]).append('\n');
 		}
-	}
-}
-
-class Info{
-	int age;
-	String name;
-	int sequence;
-	
-	Info(int age, String name, int sequence){
-		this.age = age;
-		this.name = name;
-		this.sequence = sequence;
-	}
-	
-	@Override
-	public String toString() {
-		return age + " " + name;
+		
+		System.out.println(sb);
 	}
 }
