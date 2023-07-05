@@ -1,24 +1,26 @@
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.Collections;
 
 public class Main {
 	public static void main(String[] args) throws IOException {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-		char[] arr = br.readLine().toCharArray();
+		int n = Integer.parseInt(br.readLine());
+		ArrayList<Integer> arr = new ArrayList<>();
 		
-		Integer[] iArr = new Integer[arr.length];
-		for(int i = 0; i < arr.length; i++) {
-			iArr[i] = arr[i] - '0';
+		while(n > 0) {
+			arr.add(n%10);
+			n/=10;
 		}
-
-		Arrays.sort(iArr, Collections.reverseOrder());
+		
+		Collections.sort(arr);
 		
 		StringBuilder sb = new StringBuilder();
-		for(int i = 0; i < iArr.length; i++)
-			sb.append(iArr[i].intValue());
+		for(int i = arr.size()-1; i >= 0; i--) {
+			sb.append(arr.get(i));
+		}
 		
 		System.out.println(sb);
 	}
