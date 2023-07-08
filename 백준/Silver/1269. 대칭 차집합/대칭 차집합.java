@@ -11,29 +11,24 @@ public class Main {
 		int n = Integer.parseInt(st.nextToken());
 		int m = Integer.parseInt(st.nextToken());
 		
-		HashSet<Integer> setA = new HashSet<>();
+		HashSet<Integer> set = new HashSet<>();
 		st = new StringTokenizer(br.readLine());
 		for(int i = 0; i < n; i++) {
-			setA.add(Integer.parseInt(st.nextToken()));
+			set.add(Integer.parseInt(st.nextToken()));
 		}
 		
-		HashSet<Integer> setB = new HashSet<>();
 		st = new StringTokenizer(br.readLine());
-		
-		int cnt = 0;
 		for(int i = 0; i < m; i++) {
-			int value = Integer.parseInt(st.nextToken());
-			setB.add(value);
-			if(setA.contains(value))
-				cnt++;
+			int temp = Integer.parseInt(st.nextToken());
+			if(set.contains(temp)) {
+				set.remove(temp);
+			}
+			else {
+				set.add(temp);
+			}
 		}
 		
-		for(int i : setA) {
-			if(setB.contains(i))
-				cnt++;
-		}
-		
-		System.out.println(setA.size() + setB.size() - cnt);
+		System.out.println(set.size());
 	}
 	
 }
