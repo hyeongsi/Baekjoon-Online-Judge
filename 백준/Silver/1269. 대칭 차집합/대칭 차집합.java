@@ -18,17 +18,18 @@ public class Main {
 		}
 		
 		st = new StringTokenizer(br.readLine());
+		int answer = set.size();
 		for(int i = 0; i < m; i++) {
 			int temp = Integer.parseInt(st.nextToken());
 			if(set.contains(temp)) {
-				set.remove(temp);
+				answer--;
 			}
 			else {
-				set.add(temp);
+				answer++;
 			}
 		}
 		
-		System.out.println(set.size());
+		System.out.println(answer);
 	}
 	
 }
