@@ -1,27 +1,35 @@
 import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
-import java.math.BigInteger;
 
 public class Main {
 	public static void main(String[] args) throws IOException {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-		BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+		StringBuilder sb = new StringBuilder();
 		int loop = Integer.parseInt(br.readLine());
 
 		for (int i = 0; i < loop; i++) {
-			BigInteger bi = new BigInteger(br.readLine());
-			
-			if(!bi.isProbablePrime(10))
-				bw.write(bi.nextProbablePrime().toString() + "\n");
-			else
-				bw.write(bi.toString() + "\n");
+			long tmp = Long.parseLong(br.readLine());
+			while(true) {
+				if(tmp == 0 || tmp == 1) {
+					sb.append(2).append('\n');
+					break;
+				}
+				if(getPrime(tmp)) {
+					sb.append(tmp).append('\n');
+					break;
+				}
+				tmp++;
+			}		
 		}
-
-		bw.flush();
-		bw.close();
+		System.out.println(sb);
+	}
+	static boolean getPrime(long a) {
+		for(long i =2; i<= Math.sqrt(a); i++) {
+			if(a%i == 0)
+				return false;
+		}
+		return true;
 	}
 
 }
