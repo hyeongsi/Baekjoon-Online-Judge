@@ -16,10 +16,10 @@ public class Main {
 			String p1 = st.nextToken();
 			String p2 = st.nextToken();
 			
-			if(set.contains(p1))
-				set.add(p2);
-			if(set.contains(p2))
+			if(set.contains(p1) || set.contains(p2)) {
 				set.add(p1);
+				set.add(p2);
+			}				
 		}
 		
 		System.out.println(set.size());
