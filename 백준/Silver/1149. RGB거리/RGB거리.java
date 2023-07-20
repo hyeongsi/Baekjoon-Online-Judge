@@ -25,21 +25,26 @@ public class Main {
 		minArr[0][1] = arr[0][1];
 		minArr[0][2] = arr[0][2];
 		
-		System.out.println(Math.min(Math.min(minCost(N-1,0), minCost(N-1,1)), minCost(N-1,2)));
+		System.out.println(dp(N-1));
 	}
 	
-	static int minCost(int deep, int idx) {
-		if(minArr[deep][idx] != 0)
-			return minArr[deep][idx];
-		
-		switch (idx) {
-		case 0:
-			return minArr[deep][idx] = arr[deep][0] + Math.min(minCost(deep-1, 1), minCost(deep-1, 2));
-		case 1:
-			return minArr[deep][idx] = arr[deep][1] + Math.min(minCost(deep-1, 0), minCost(deep-1, 2));
-		default:
-			return minArr[deep][idx] = arr[deep][2] + Math.min(minCost(deep-1, 0), minCost(deep-1, 1));
+	static int dp(int n) {
+		return Math.min(Math.min(dp(n,0), dp(n,1)), dp(n,2));
+	}
+	
+	static int dp(int deep, int idx) {
+		if(minArr[deep][idx] == 0) {
+			if(idx == 0) {
+				minArr[deep][idx] = arr[deep][idx] + Math.min(dp(deep-1,1), dp(deep-1,2));
+			}
+			else if(idx==1) {
+				minArr[deep][idx] = arr[deep][idx] + Math.min(dp(deep-1,0), dp(deep-1,2));
+			}
+			else {
+				minArr[deep][idx] = arr[deep][idx] + Math.min(dp(deep-1,0), dp(deep-1,1));
+			}
 		}
 		
+		return minArr[deep][idx];
 	}
 }
