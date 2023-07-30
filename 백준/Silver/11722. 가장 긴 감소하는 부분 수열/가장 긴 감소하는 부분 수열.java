@@ -6,10 +6,11 @@ import java.util.StringTokenizer;
 public class Main {
 	static int[] arr;
 	static int[] dp;
+	static int N;
 	public static void main(String[] args) throws NumberFormatException, IOException {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		 
-		int N = Integer.parseInt(br.readLine());
+		N = Integer.parseInt(br.readLine());
 		arr = new int[N];
 		dp = new int[N];
 		StringTokenizer st = new StringTokenizer(br.readLine());		
@@ -19,20 +20,24 @@ public class Main {
 		
 		dp[N-1] = 1;
 		
-		for(int i = N-2; i >= 0; i--) {
-			dp[i] = 1;
-			for(int j = i+1; j < N; j++) {
-				if(arr[i] <= arr[j])
-					continue;
-				
-				dp[i] = Math.max(dp[i], dp[j] + 1);
-			}
-		}
-
 		int max = 0;
 		for(int i = 0; i < N; i++) {
+			find(i);
 			max = Math.max(max, dp[i]);
 		}
 		System.out.println(max);
+	}
+	
+	static int find(int n) {
+		if(dp[n] == 0) {
+			dp[n] = 1;
+			for(int i = n; i < N; i++) {
+				if(arr[n] > arr[i]) {
+					dp[n] = Math.max(dp[n], find(i) + 1);
+				}
+			}
+		}
+		
+		return dp[n];
 	}
 }
