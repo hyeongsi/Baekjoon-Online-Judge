@@ -34,7 +34,7 @@ public class Main {
 			for(int i = x1; i <= x2; i++) {
 				sum += arr[i][y2] - arr[i][y1-1];
 			}
-			sb.append(sum).append('\n');
+			sb.append(sum).append("\n");
 		}
 		
 		System.out.println(sb);
