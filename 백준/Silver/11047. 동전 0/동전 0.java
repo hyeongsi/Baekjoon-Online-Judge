@@ -18,9 +18,9 @@ public class Main {
 		
 		int cnt = 0;
 		for(int i = N-1; i >= 0; i--) {
-			while(K >= arr[i]) {
-				K-= arr[i];
-				cnt++;
+			if(K >= arr[i]) {
+				cnt += K / arr[i];
+				K %= arr[i];
 			}
 		}
 		
