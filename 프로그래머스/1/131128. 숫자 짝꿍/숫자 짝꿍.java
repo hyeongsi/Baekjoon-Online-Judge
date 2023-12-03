@@ -1,33 +1,26 @@
-import java.util.*;
-
 class Solution {
     public String solution(String X, String Y) {
-        
-        int[] xArr = new int[10];
-        int[] yArr = new int[10];
-        
-        for(int i = 0; i < X.length(); i++){
-            xArr[X.charAt(i) - '0']++;
+        StringBuilder answer = new StringBuilder();
+        int[] x = {0,0,0,0,0,0,0,0,0,0};
+        int[] y = {0,0,0,0,0,0,0,0,0,0};
+        for(int i=0; i<X.length();i++){
+           x[X.charAt(i)-48] += 1;
         }
-        
-        StringBuilder sb = new StringBuilder();
-        for(int i = 0; i < Y.length(); i++){
-            int idx = Y.charAt(i) - '0';
-            if(xArr[idx] > 0){
-                xArr[idx]--;
-                sb.append(idx);
+        for(int i=0; i<Y.length();i++){
+           y[Y.charAt(i)-48] += 1;
+        }
+
+        for(int i=9; i >= 0; i--){
+            for(int j=0; j<Math.min(x[i],y[i]); j++){
+                answer.append(i);
             }
         }
-        
-        if(sb.length() == 0){
-            return "-1";
+        if("".equals(answer.toString())){
+           return "-1";
+        }else if(answer.toString().charAt(0)==48){
+           return "0";
+        }else {
+            return answer.toString();
         }
-        
-        char[] chArr = sb.toString().toCharArray();
-        Arrays.sort(chArr);
-        
-        String answer = new StringBuilder(new String(chArr)).reverse().toString();
-        
-        return (answer.charAt(0) != '0') ? answer : "0";
     }
 }
