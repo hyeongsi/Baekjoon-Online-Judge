@@ -1,50 +1,51 @@
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 class Solution {
-    public int[] solution(int N, int[] stages) {
-        int[] clear = new int[N + 1];
-
-        for(int i = 0; i < stages.length; i++) {
-            clear[stages[i] - 1]++;
+    public int[] solution(int N, int[] lastStages) {
+        int nPlayers = lastStages.length;
+        int[] nStagePlayers = new int[N + 2];
+        for (int stage : lastStages) {
+            nStagePlayers[stage] += 1;
         }
 
-        int clearCnt = clear[N];
-        List<Score> list = new ArrayList<>();
-        for(int i = N - 1; i >= 0; i--){
-            clearCnt += clear[i];
-            if(clearCnt == 0){
-                list.add(new Score(i + 1, 0.0));
-            } else {
-                list.add(new Score(i + 1, clear[i] / (clearCnt * 1.0)));
-            }
+        int remainingPlayers = nPlayers;
+        List<Stage> stages = new ArrayList<>();
+        for (int id = 1 ; id <= N; id++) {
+            double failure = (double) nStagePlayers[id] / remainingPlayers;
+            remainingPlayers -= nStagePlayers[id];
+
+            Stage s = new Stage(id, failure);
+            stages.add(s);
         }
-        
+        Collections.sort(stages, Collections.reverseOrder());
+
         int[] answer = new int[N];
-        Collections.sort(list);
-        for(int i = 0; i < list.size(); i++){
-            answer[i] = list.get(i).index;
-            System.out.println(list.get(i).index + ", " + list.get(i).failure);
+        for (int i = 0; i < N; i++) {
+            answer[i] = stages.get(i).id;
         }
-        
         return answer;
     }
-    
-    class Score implements Comparable<Score> {
-        public int index;
+
+    class Stage implements Comparable<Stage> {
+        public int id;
         public double failure;
-        
-        public Score(int index, double failure) {
-            this.index = index;
-            this.failure = failure;
+
+        public Stage(int id_, double failure_) {
+            id = id_;
+            failure = failure_;
         }
-        
+
         @Override
-        public int compareTo(Score score){
-            if(this.failure == score.failure){
-                return this.index - score.index;
+        public int compareTo(Stage o) {
+            if (failure < o.failure ) {
+                return -1;
             }
-            
-            return (this.failure > score.failure) ? -1 : 1;
+            if (failure > o.failure ) {
+                return 1;
+            }
+            return 0;
         }
     }
 }
