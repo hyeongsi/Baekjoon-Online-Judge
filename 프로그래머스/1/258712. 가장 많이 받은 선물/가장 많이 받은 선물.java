@@ -2,6 +2,7 @@ import java.util.*;
 
 class Solution {
     public int solution(String[] friends, String[] gifts) {
+        int answer = 0;
         
         //다음 달에 누가 선물을 많이 받을지 예측
         //두 사람이 선물을 주고받은 기록이 있다면 더 많은 선물을 준 사람이 다음달에 선물을 하나 받음
@@ -70,11 +71,7 @@ class Solution {
                     }
                 }
             }
-        }
-        
-        //가장 많이 받은사람 구하기
-        int answer = 0;
-        for (int i = 0; i < nextMonthGiftList.length; i++) {
+            //가장 많이 받은사람 구하기
             answer = Math.max(answer, nextMonthGiftList[i]);
         }
         
