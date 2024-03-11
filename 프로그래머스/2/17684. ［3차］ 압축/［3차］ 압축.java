@@ -1,55 +1,58 @@
-import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.*;
+
 class Solution {
-    static HashMap<String, Integer> map = new HashMap<String, Integer>();
-    static ArrayList<Integer> list = new ArrayList<Integer>();
-    static char[] arr;
-    static int num = 1;
   public int[] solution(String msg) {
+        int nextIndex = 27;
+        int nextStartIndex = 0;
 
-      for(int i = 0;i < 27;i++) {
-            map.put(String.valueOf((char)(65+i)), i+1);
-      }
-      arr = msg.toCharArray();
+        Map<String, Integer> dictionary = new HashMap<>();
+        List<Integer> list = new ArrayList<>();
 
-      while(num <= arr.length) {
-            String tmp;
-            if(num == arr.length) tmp = "" + arr[num-1];
-            else tmp = "" + arr[num - 1] + arr[num];
+        while (true) {
+            if (nextStartIndex > msg.length() - 1) { 
+                break;
+            }
+            if (nextStartIndex == msg.length() - 1) { 
+                char w = msg.charAt(nextStartIndex);
+                list.add(w - 64);
+                break;
+            }
 
-            encoding(tmp);
+            String toFind = msg.substring(nextStartIndex, nextStartIndex + 2);
+            String w = "";
+            if (dictionary.containsKey(toFind)) {
+                w = toFind;
+                boolean findLargerW = true;
+                int i = 2;
+                while (findLargerW) {
+                    i++;
+                    if (nextStartIndex + i > msg.length()) {
+                        break;
+                    }
+                    toFind = msg.substring(nextStartIndex, nextStartIndex + i);
+                    if (dictionary.containsKey(toFind)) {
+                        findLargerW = true;
+                        w = toFind;
+                    } else {
+                        findLargerW = false;
+                    }
+                }
+                list.add(dictionary.get(w));
+                dictionary.put(toFind, nextIndex++);
+                nextStartIndex += w.length();
 
-
-
-
-
-
-        //  if(num > arr.length) break;
-
+            } else {
+                char c = msg.charAt(nextStartIndex);
+                list.add(c - 64);
+                dictionary.put(toFind, nextIndex++);
+                nextStartIndex++;
+            }
         }
-       int[] answer = new int[list.size()];
-      int size = 0;
-      for(int i : list) {
-            answer[size++] = i;
-      }
 
-
-      return answer;
-  }
-    static void encoding(String tmp) {
-        int ans = 0;
-        if(map.containsKey(tmp) && num < arr.length - 1) {
-            encoding(tmp + arr[++num]);         
+        int[] answer = new int[list.size()];
+        for (int i = 0; i < list.size(); i++) {
+            answer[i] = list.get(i);
         }
-        else if(map.containsKey(tmp)){
-            num += 2;
-            list.add(map.get(tmp));
-        }
-        else {
-            map.put(tmp, map.size());
-            tmp = tmp.substring(0, tmp.length()-1);
-            num++;
-            list.add(map.get(tmp));
-        }
+        return answer;
     }
 }
