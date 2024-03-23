@@ -1,7 +1,14 @@
 -- 코드를 입력하세요
-SELECT '/home/grep/src/' || BOARD_ID || '/' || FILE_ID || FILE_NAME || FILE_EXT FILE_PATH
-FROM USED_GOODS_FILE
-WHERE BOARD_ID = (SELECT BOARD_ID
-                    FROM USED_GOODS_BOARD
-                    WHERE VIEWS = (SELECT MAX(VIEWS) FROM USED_GOODS_BOARD))
-ORDER BY FILE_ID DESC;
+with mx as (
+    select 
+        max(board_id) keep(dense_rank last order by views) board_id
+    from used_goods_board
+)
+
+select '/home/grep/src/'||f.board_id||'/'||f.file_id||f.file_name||f.file_ext file_path 
+from used_goods_file f
+where f.board_id in (
+        select board_id 
+        from mx
+)
+order by f.file_id desc
