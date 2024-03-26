@@ -1,13 +1,20 @@
+import java.math.*;
+
 class Solution {
     public long solution(int n) {
-        int[] dp = new int[2001];
-        dp[1] = 1;
-        dp[2] = 2;
-        
-        for (int i = 3; i <= n; i++) {
-            dp[i] = (dp[i - 1] + dp[i - 2]) % 1234567;
+        if(n == 1)
+            return 1;
+
+        BigInteger beforeOne = new BigInteger("1");
+        BigInteger beforeTwo = new BigInteger("1");
+        BigInteger tmp;
+
+        for(int target = 2; target <= n; target++) {
+            tmp = beforeOne.add(beforeTwo);
+            beforeTwo = beforeOne;
+            beforeOne = tmp;
         }
-        
-        return dp[n];
+
+        return beforeOne.remainder(new BigInteger("1234567")).longValue();
     }
 }
