@@ -1,45 +1,37 @@
 import java.util.*;
 
 class Solution {
-    int cnt = 0;
-    boolean escape;
+    StringBuilder sb = new StringBuilder();
+    char[] alpha = {'A', 'E', 'I', 'O', 'U'}; 
+    boolean isFind = false;
+    int answer = 0;
     
-    String[] alpha = {"A", "E", "I", "O", "U"};
-    String[] curWord = {"", "", "", "", ""};
-
     public int solution(String word) {
-        
-        dfs(0, word);
-        return cnt;
+
+        dfs(word);     
+        return answer;
     }
     
-    public void dfs(int deep, String word) {
-        ckWord(word);
-        if (escape)
+    public void dfs(String word) {
+        if (sb.toString().equals(word)) {
+            isFind = true;
             return;
-        if (deep > 4)
-            return;
-        
-        for (int i = 0; i < 5; i++) {
-            ckWord(word);
-            if (escape)
-                return;
-            
-            curWord[deep] = alpha[i];
-            cnt++;
-            
-            dfs(deep + 1, word);
-            curWord[deep] = "";
-        }
-    }
-    
-    public void ckWord(String word) {
-        String str = "";
-        for (int i = 0; i < 5; i++) {
-            str += curWord[i];
         }
         
-        if (str.equals(word))
-            escape = true;
+        if (isFind) {
+            return;
+        }
+        
+        if (sb.length() > 5) {
+            return;
+        }
+        answer++;
+        
+        for (int i = 0; i < 5; i++) {
+            sb.append(alpha[i]);
+            dfs(word);
+            sb.deleteCharAt(sb.length() - 1);
+        }
+        
     }
 }
