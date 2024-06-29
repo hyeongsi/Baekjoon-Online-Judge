@@ -4,51 +4,48 @@ import java.io.InputStreamReader;
 import java.util.StringTokenizer;
 
 public class Main {
-    static int white = 0;
-    static int blue = 0;
+    static int[][] paper = null;
+    static int[] colorCnt = new int[2];
+
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        int loop = Integer.parseInt(br.readLine());
 
-        Integer paperSize = Integer.parseInt(br.readLine());
-
-        String[][] paper = new String[paperSize][paperSize];
-        for (int i = 0; i < paperSize; i++) {
+        // setPaperColor
+        paper = new int[loop][loop];
+        for (int i = 0; i < loop; i++) {
             StringTokenizer st = new StringTokenizer(br.readLine());
-            for (int j = 0; j < paperSize; j++) {
-                paper[i][j] = st.nextToken();
+            for (int j = 0; j < loop; j++) {
+                paper[i][j] = Integer.parseInt(st.nextToken());
             }
         }
 
-        CountColor(paper, paperSize, 0, 0);
+        // findSplitColorCnt
+        findSplitColorCnt(0, 0, loop);
+        System.out.println(colorCnt[0]);
+        System.out.println(colorCnt[1]);
+    }
 
-        System.out.println(white);
-        System.out.println(blue);
+    private static void findSplitColorCnt(int x, int y, int splitSize) {
+        int color = paper[y][x];
 
-    }// end main
+        if (splitSize == 1) {
+            colorCnt[color]++;
+            return;
+        }
 
-    public static void CountColor(String[][] paper, int checkSize, int x, int y) {
-        final int ckHalf = checkSize / 2;
-        final String firstColor = paper[y][x];
-
-        for (int i = y; i < y + checkSize; i++) {
-            for (int j = x; j < x + checkSize; j++) {
-                if (!firstColor.equals(paper[i][j])) {
-                    CountColor(paper, ckHalf, x, y);
-                    CountColor(paper, ckHalf, x + ckHalf, y);
-                    CountColor(paper, ckHalf, x, y + ckHalf);
-                    CountColor(paper, ckHalf, x + ckHalf, y + ckHalf);
+        for (int i = y; i < y + splitSize; i++) {
+            for (int j = x; j < x + splitSize; j++) {
+                if (color != paper[i][j]) {
+                    findSplitColorCnt(x, y, splitSize/2);
+                    findSplitColorCnt(x + splitSize/2, y, splitSize/2);
+                    findSplitColorCnt(x, y + splitSize/2, splitSize/2);
+                    findSplitColorCnt(x + splitSize/2, y + splitSize/2, splitSize/2);
                     return;
                 }
             }
         }
 
-        if (firstColor.equals("1")) {
-            blue++;
-        } else {
-            white++;
-        }
-
+        colorCnt[color]++;
     }
-
 }
-
