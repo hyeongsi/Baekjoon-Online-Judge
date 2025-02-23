@@ -4,24 +4,21 @@ import java.io.InputStreamReader;
 import java.util.StringTokenizer;
 
 public class Main {
-	public static void main(String[] args) throws IOException {
-		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-		StringTokenizer st;
-		
-		int loop = Integer.parseInt(br.readLine());
-		st = new StringTokenizer(br.readLine());
-		String find = br.readLine();
-		
-		int result = 0;
-		String[] arr = new String[loop];
-		
-		for(int i=0; i<loop; i++) {
-			arr[i] = st.nextToken();
-			if(arr[i].equals(find))
-				result++;
-		}
-		
-		System.out.println(result);
-		br.close();
-	}
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+
+        int answer = 0;
+        int loop = Integer.parseInt(br.readLine());
+
+        StringTokenizer st = new StringTokenizer(br.readLine());
+        int targetNum = Integer.parseInt(br.readLine());
+
+        for (int i = 0; i < loop; i++) {
+            if (targetNum == Integer.parseInt(st.nextToken())) {
+                ++answer;
+            }
+        }
+
+        System.out.println(answer);
+    }
 }
