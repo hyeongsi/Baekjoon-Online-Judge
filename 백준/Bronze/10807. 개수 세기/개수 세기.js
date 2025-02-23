@@ -1,10 +1,10 @@
 const fs = require('fs');
-const [loop, inputs, target] = fs.readFileSync('./dev/stdin').toString().trim().split("\n");
+const input = fs.readFileSync('./dev/stdin')
+    .toString()
+    .split("\n")
+    .map(el => el.split(" ").map(Number));
 
-let ans = 0;
-inputs.split(" ").forEach(item => {
-    if (target == item)
-        ans++;
-});
+const array = input[1];
+const target = input[2][0];
 
-console.log(ans);
+console.log(array.filter(val => val === target).length);
