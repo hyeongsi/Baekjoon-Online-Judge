@@ -1,10 +1,8 @@
 const fs = require('fs');
-const input = fs.readFileSync('./dev/stdin')
-    .toString()
-    .split("\n")
-    .map(el => el.split(" ").map(Number));
+const input = fs.readFileSync('./dev/stdin').toString().split("\n");
 
-const array = input[1];
-const target = input[2][0];
+const [num, target] = [input[1], input[2]];
+const numArr = num.split(" ");
 
-console.log(array.filter(val => val === target).length);
+const find = numArr.filter((v, i) => { return v == target });
+console.log(find.length);
