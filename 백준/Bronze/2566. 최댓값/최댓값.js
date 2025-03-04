@@ -1,24 +1,16 @@
 const fs = require('fs');
-const inputs = fs.readFileSync('./dev/stdin').toString().trim().split("\n");
+const inputs = fs.readFileSync('./dev/stdin').toString().trim().split("\n")
+                                                        .map((value, index) => value.split(" ").map(Number))
 
-const SIZE = 9;
-let max = 0;
-let y = 0;
-let x = 0;
+const max = Math.max(...inputs.flat());
+let answer = '';
 
-for (let i = 0; i < SIZE; i++) {
-    max = inputs[i].trim()
-                    .split(" ")
-                    .map(Number)
-                    .reduce((previousValue, currentValue, currentIndex) => {
-        if (previousValue < currentValue) {
-            y = i;
-            x = currentIndex;
-            return currentValue;
+for (let i = 0; i < 9; i++) {
+    for (let j = 0; j < 9; j++) {
+        if (inputs[i][j] === max) {
+            answer += `${max}\n${i + 1} ${j + 1}`;
+            console.log(answer);
+            return;
         }
-        return previousValue;
-    }, max);
+    }
 }
-
-console.log(max);
-console.log(y + 1, x + 1);
