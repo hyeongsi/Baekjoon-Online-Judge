@@ -1,29 +1,38 @@
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.Arrays;
 
 public class Main {
-	public static void main(String[] args) throws IOException {
-		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-		
-		int[] max = new int[3]; // 값, 행, 열
-		max[0] = -1;
-		
-		for(int i = 0; i < 9; i ++) {
-			String[] strArr = br.readLine().split(" ");
-			
-			for(int j = 0; j < 9; j ++) {
-				int value = Integer.parseInt(strArr[j]);
-				
-				if(max[0] < value) {
-					max[0] = value;
-					max[1] = i + 1;
-					max[2] = j + 1;
-				}	
-			}
-		}
-		
-		System.out.println(max[0]);
-		System.out.println(max[1] + " " + max[2]);
-	}
+    static final int SIZE = 9;
+
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+
+        MaxPos maxPos = new MaxPos();
+        for (int i = 0; i < SIZE; i++) {
+            int[] array = Arrays.stream(br.readLine().split(" ")).mapToInt(Integer::parseInt).toArray();
+            for (int j = 0; j < SIZE; j++) {
+                if (maxPos.max >= array[j])
+                    continue;
+
+                maxPos.max = array[j];
+                maxPos.y = i;
+                maxPos.x = j;
+            }
+        }
+
+        System.out.println(maxPos);
+    }
+
+    static class MaxPos {
+        public int y = 0;
+        public int x = 0;
+        public int max = 0;
+
+        @Override
+        public String toString() {
+            return max + "\n" + (y + 1) + " " + (x + 1);
+        }
+    }
 }
