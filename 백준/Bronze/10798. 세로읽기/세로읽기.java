@@ -1,24 +1,28 @@
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.Arrays;
 
 public class Main {
-	public static void main(String[] args) throws IOException {
-		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-		
-		String[] strArr = new String[15];
-		Arrays.fill(strArr, "");
-			
-		for(int i = 0; i < 5; i++) {
-			String[] line = br.readLine().split("");
-			for(int j = 0; j < line.length; j++) {
-				strArr[j] += line[j];
-			}
-		}
-		
-		for(String str:strArr) {
-			System.out.print(str);
-		}
-	}
+    static final int LOOP = 5;
+
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        String[][] words = new String[LOOP][];
+        StringBuffer sb = new StringBuffer();
+
+        for (int i = 0; i < LOOP; i++) {
+            words[i] = br.readLine().split("");
+        }
+
+        int loopCnt = 0;
+        while (loopCnt < 75) {
+            if (words[loopCnt % LOOP].length > loopCnt / LOOP) {
+                sb.append(words[loopCnt % LOOP][loopCnt / LOOP]);
+            }
+            loopCnt++;
+        }
+
+        System.out.println(sb);
+    }
+
 }
