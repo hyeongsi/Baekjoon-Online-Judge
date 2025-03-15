@@ -3,24 +3,31 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 
 public class Main {
-	public static void main(String[] args) throws IOException {
-		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-		
-		int num = Integer.parseInt(br.readLine());
-		
-		int compare = 0;
-		
-		int loop = 0;
-		int result = 1;
-		
-		final int hexagon = 6;
-		while(compare < num-1) {
-			result++;
-			loop++;
-			
-			compare += (hexagon * loop);
-		}
-			
-		System.out.println(result);		
-	}
+
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        int n = Integer.parseInt(br.readLine());
+
+        if (n == 1) {
+            System.out.println(n);
+            return;
+        }
+
+        int loop = 2;
+        int[] range = {2, 7};
+        int acc = 5;
+        while (true) {
+            if (range[0] <= n && n <= range[1]) {
+                break;
+            }
+
+            loop++;
+            acc += 6;
+            range[0] = range[1] + 1;
+            range[1] = range[0] + acc;
+        }
+
+        System.out.println(loop);
+    }
+
 }
