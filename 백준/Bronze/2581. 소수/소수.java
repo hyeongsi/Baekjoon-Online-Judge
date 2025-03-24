@@ -1,43 +1,40 @@
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.ArrayList;
 
 public class Main {
-	public static void main(String[] args) throws IOException {
-		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-				
-		int m = Integer.parseInt(br.readLine());
-		int n = Integer.parseInt(br.readLine());
-		
-		ArrayList<Integer> al = new ArrayList<>();
-		
-		for(int i = m; i <= n; i++) {
-			if(isPrime(i))
-				al.add(i);
-		}
-		
-		int sum = 0;
-		if(al.size() == 0)
-			System.out.println(-1);
-		else{
-			for(int p:al)
-				sum += p;
-			
-			System.out.println(sum);
-			System.out.println(al.get(0));
-		}
-	}
 
-	private static boolean isPrime(int n) {
-		if(n == 1)
-			return false;
-		
-		for(int i = 2; i <= Math.sqrt(n); i++) {
-			if(n % i == 0)
-				return false;
-		}
-		
-		return true;
-	}
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+
+        int m = Integer.parseInt(br.readLine());
+        int n = Integer.parseInt(br.readLine());
+
+        boolean[] prime = new boolean[10001];
+        prime[0] = prime[1] = true;
+        for (int i = 2; i <= Math.sqrt(10000); i++) {
+
+            if (prime[i]) continue;
+
+            for (int j = i * i; j < prime.length; j += i) {
+                prime[j] = true;
+            }
+        }
+
+        int result = 0;
+        int minPrime = Integer.MAX_VALUE;
+        for (int i = m; i <= n; i++) {
+            if (!prime[i])  {
+                minPrime = Math.min(minPrime, i);
+                result += i;
+            }
+        }
+
+        if (result == 0) {
+            System.out.println(-1);
+        } else {
+            System.out.println(result);
+            System.out.println(minPrime);
+        }
+    }
 }
