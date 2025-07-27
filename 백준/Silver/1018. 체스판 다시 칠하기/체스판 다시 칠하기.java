@@ -1,53 +1,61 @@
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.StringTokenizer;
+import java.util.Arrays;
 
 public class Main {
-	public static void main(String[] args) throws IOException {	
-		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-		
-		StringTokenizer st = new StringTokenizer(br.readLine());
-		int y = Integer.parseInt(st.nextToken());
-		int x = Integer.parseInt(st.nextToken());
-		
-		int min = Integer.MAX_VALUE;
-		int c;
-		
-		String[] board = new String[y];
-		for(int i = 0; i < y; i++) {
-			board[i] = br.readLine();
-		}
-		
-		for(int i = 0; i <= y - 8; i ++) {
-			for(int j = 0; j <= x - 8; j ++) {
-				c = getColoring(board.clone(), i, j);
-				
-				if(min > c) {
-					min = c;
-				}
-			}
-		}
-		
-		System.out.println(min);
-	}
+    final static int loop = 8;
 
-	private static int getColoring(String[] board, int y, int x) {
-		
-		int coloring = 0;
-		char startColor = board[y].charAt(x);
-		
-		for(int i = 0; i < 8; i ++) {
-			for(int j = 0; j < 8; j ++) {
-				
-				if(board[y + i].charAt(x + j) != startColor ) 	
-					coloring++;		
-	
-				startColor = (startColor == 'W')? 'B' : 'W';
-			}
-			startColor = (startColor == 'W')? 'B' : 'W';
-		}
-		
-		return Math.min(coloring, 64-coloring);
-	}
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        int[] input = Arrays.stream(br.readLine().split(" ")).mapToInt(Integer::parseInt).toArray();
+
+        String[] board = new String[input[0]];
+        for (int i = 0; i < board.length; i++) {
+            board[i] = br.readLine();
+        }
+
+        int ans = Integer.MAX_VALUE;
+        for (int i = 0; i <= input[0] - loop; i++) {
+            for (int j = 0; j <= input[1] - loop; j++) {
+                ans = Math.min(ans, getFixColor(board.clone(), i, j));
+            }
+        }
+
+        System.out.println(ans);
+    }
+
+    private static int getFixColor(String[] board, int y, int x) {
+        int fixCnt = 0;
+        Color prevColor = Color.W;
+
+        for (int i = 0; i < loop; i++) {
+            for (int j = 0; j < loop; j++) {
+
+                if (board[y + i].charAt(x + j) != prevColor.getName()) {
+                    fixCnt++;
+                }
+
+                if (loop - 1 != j) {
+                    prevColor = Color.W == prevColor ? Color.B : Color.W;
+                }
+            }
+        }
+
+        return Math.min(fixCnt, 64 - fixCnt);
+    }
+
+    private enum Color {
+        W('W'),
+        B('B');
+
+        final private char name;
+        public char getName() {
+            return name;
+        }
+        private Color(char name) {
+            this.name = name;
+        }
+    }
+
 }
