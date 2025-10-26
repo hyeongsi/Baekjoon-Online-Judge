@@ -17,6 +17,9 @@ const newWords = words
 
     return a.num - b.num;
   })
-  .forEach(({ num, str }) => {
-    console.log(`${num} ${str}`);
-  });
+  .map((word) => {
+    return `${word.num} ${word.str}`;
+  })
+  .join("\n");
+
+console.log(newWords);
